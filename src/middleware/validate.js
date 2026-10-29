@@ -22,4 +22,13 @@ const validate = (schema) => (req, res, next) => {
   next();
 };
 
-module.exports = { validate, signupSchema, loginSchema };
+const forgotPasswordSchema = z.object({ email: z.string().email() });
+
+const resetPasswordSchema = z.object({
+  email: z.string().email(),
+  code: z.string().regex(/^\d{6}$/, 'Enter the 6-digit code'),
+  newPassword: z.string().min(8, 'Password must be at least 8 characters'),
+});
+
+module.exports = { validate, signupSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema };
+

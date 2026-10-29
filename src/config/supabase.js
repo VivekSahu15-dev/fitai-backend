@@ -1,13 +1,14 @@
-// src/config/supabase.js
 const { createClient } = require('@supabase/supabase-js');
 
-// For auth calls on behalf of users
-const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
+const options = {
+  auth: { persistSession: false, autoRefreshToken: false, detectSessionInUrl: false },
+};
 
-// For admin/server-side DB writes (bypasses RLS) - never expose to the app
+const supabase = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY, options);
 const supabaseAdmin = createClient(
   process.env.SUPABASE_URL,
-  process.env.SUPABASE_SERVICE_ROLE_KEY
+  process.env.SUPABASE_SERVICE_ROLE_KEY,
+  options
 );
 
 module.exports = { supabase, supabaseAdmin };
