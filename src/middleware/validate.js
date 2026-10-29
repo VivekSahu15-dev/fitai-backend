@@ -30,5 +30,21 @@ code: z.string().regex(/^\d{6,10}$/, 'Enter the verification code from your emai
   newPassword: z.string().min(8, 'Password must be at least 8 characters'),
 });
 
-module.exports = { validate, signupSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema };
+
+const fitnessSchema = z.object({
+  age: z.number().int().min(13).max(100),
+  gender: z.enum(['male', 'female', 'other']),
+  heightCm: z.number().min(100).max(250),
+  weightKg: z.number().min(30).max(300),
+  goal: z.enum(['build_muscle', 'lose_fat', 'maintain', 'get_fitter']),
+  activityLevel: z.enum(['sedentary', 'light', 'moderate', 'very_active']),
+  experience: z.enum(['beginner', 'intermediate', 'advanced']),
+  daysPerWeek: z.number().int().min(2).max(7),
+  dietPreference: z.enum(['vegetarian', 'eggetarian', 'non_vegetarian', 'vegan', 'no_preference']),
+});
+
+module.exports = {
+  validate, signupSchema, loginSchema, forgotPasswordSchema, resetPasswordSchema, fitnessSchema,
+};
+
 
